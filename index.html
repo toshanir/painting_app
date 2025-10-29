@@ -1,86 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paint App</title>
-  <link href="style.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-  <div class="main-container">
-    <div class="colors">
-      <button value="#FBFF00" style="background:#FBFF00;"></button>
-      <button value="#009FFF" style="background:#009FFF;"></button>
-      <button value="#000000" style="background:#000000;"></button>
-      <button value="#FF0000" style="background:#FF0000;"></button>
-      <button value="#3EFF00" style="background:#3EFF00;"></button>
-      <button value="#FFFFFF" style="background:#FFFFFF;"></button>
-      <button value="#e2067b" style="background:#e2067b;"></button>
-      <button value="#06fcf0" style="background:#06fcf0;"></button>
-      <button value="#fc6006" style="background:#fc6006;"></button>
-      <button value ="#e306fc" style = "background: #e306fc;"></button>
-      <button value = "#a5d6a7" style = "background: #a5d6a7;"></button>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>animaciones scroll</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="main-container">
+      
+        <div class="colors">
+          <button value="#FBFF00"></button>
+          <button value="#009fff"></button>
+          <button value="#000000"></button>
+          <button value="#FF0000"></button>
+          <button value="#3EFF00"></button>
+          <button value="#FFF"></button>
+        </div>
+
+        <input id="brush" type="range" value="1" min="1" max="5" step="1"></input>
+        <button id="clear" type="button">Clear</button>
+        <button id="save" type="button">Save</button>
+        <br>
+        <canvas id="paint-canvas" width="640" height="400"></canvas>
+
     </div>
-
-    <label for="brush">Brush size:</label>
-    <input id="brush" type="range" value="1" min="1" max="5" step="1">
-
-    <label for="transparent">Transparency:</label>
-    <input id="transparent" type="range" value="100" min="0" max="100" step="1">
-
-    <button id="clear" type="button">Clear</button>
-    <button id="save" type="button">Save</button>
-
-    <br>
-    <canvas id="paint-canvas" width="640" height="350"></canvas>
-  </div>
-  <script>
-    const canvas = document.getElementById("paint-canvas");
-    const ctx = canvas.getContext("2d");
-
-    let painting = false;
-    let color = "#000000";
-    let brushSize = document.getElementById("brush").value;
-    let transparency = document.getElementById("transparent").value;
-
-    canvas.addEventListener("mousedown", () => painting = true);
-    canvas.addEventListener("mouseup", () => painting = false);
-    canvas.addEventListener("mousemove", draw);
-
-    document.getElementById("brush").addEventListener("input", (e) => {
-      brushSize = e.target.value;
-    });
-
-    document.getElementById("transparent").addEventListener("input", (e) => {
-      transparency = e.target.value;
-    });
-
-    document.querySelectorAll(".colors button").forEach(btn => {
-      btn.addEventListener("click", () => {
-        color = btn.value;
-      });
-    });
-
-    document.getElementById("clear").addEventListener("click", () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-
-    document.getElementById("save").addEventListener("click", () => {
-      const link = document.createElement("a");
-      link.download = "drawing.png";
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-
-    function draw(e) {
-      if (!painting) return;
-      ctx.globalAlpha = transparency / 100; // this makes transparency work
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(e.offsetX, e.offsetY, brushSize, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.globalAlpha = 1.0; // reset alpha after drawing
-    }
-  </script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
